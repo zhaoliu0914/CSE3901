@@ -1,0 +1,131 @@
+<% if @course.empty? %>
+  <p>There are no courses</p>
+  <%= link_to "Main Page", root_path %>
+  <% if current_user.role == "admin" and current_user.status == 'approved' %>
+    <p><%= button_to "Reload Database", courses_reload_new_path, method: :get , class:"buttons"%></p>
+  <% end %>
+<% else %>
+
+  <%== pagy_nav(@pagy) %>
+  <br/>
+  <p>
+    <%= link_to "Main Page", root_path , class:"links" %>
+    <% if current_user.role == "admin" and current_user.status == 'approved' %>
+      &emsp;
+      <%= link_to "Add Course", new_course_path, class:"links" %>
+      <%= button_to "Reload Database", courses_reload_new_path, method: :get , class:"buttons"%>
+
+    <% end %>
+    &emsp;
+    <% if @order == "asc" %>
+      <%= link_to "Sort Catalog Number in Descending  order", courses_path(order: "desc") %>
+    <% else %>
+      <%= link_to "Sort Catalog Number in Ascending order", courses_path(order: "asc") %>
+    <% end %>
+    &emsp;
+
+  </p>
+  <% @course.each do |course| %>
+    <h1>Courses: CSE <%= course.catalog_number %></h1>
+    <p>Catalog Number: <b>CSE <%= course.catalog_number %></b></p>
+    <p>Title: <%= course.title %></p>
+    <p>Description: <%= course.description %></p>
+    <p>Campus: <%= course.campus %></p>
+    <p>Term: <%= course.term %></p>
+    <p>Units: <%= course.units %></p>
+    <% if current_user.role == "admin" %>
+      <p>
+        <%= link_to "Delete Course", course_path(course.id), data: { turbo_method: :delete }, class:"links" %>
+        &emsp;
+        <%= link_to "Edit Course", edit_course_path(course.id) , class:"links"%>
+        &emsp;&emsp;
+        <%= link_to "Add Section", new_course_section_path(course.id), class:"links" %>
+      </p>
+    <% end %>
+
+    <h1>&emsp;Sections</h1>
+    <hr/>
+    <% course.sections.each do |section| %>
+      <p>&emsp;&emsp;&emsp;&emsp;Class Number:&nbsp;
+        <b><%= section.class_number %></b>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Section Number:&nbsp;
+        <%= section.section_number %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Instructor Name:&nbsp;
+        <% if section.instructor_name == nil or section.instructor_name == "" %>
+          To be Announced
+        <% else %>
+          <%= section.instructor_name %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Instructor Email:&nbsp;
+        <% if section.instructor_email == nil or section.instructor_email == "" %>
+          To be Announced
+        <% else %>
+          <%= section.instructor_email %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Instruction Mode:&nbsp;
+        <%= section.instruction_mode %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Start Date:&nbsp;
+        <%= section.start_date %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;End Date:&nbsp;
+        <%= section.end_date %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Location:&nbsp;
+        <% if section.location == nil or section.location == "" %>
+          To be Announced
+        <% else %>
+            <%= section.location %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Room:&nbsp;
+        <% if section.room == nil or section.room == "" %>
+          To be Announced
+        <% else %>
+          <%= section.room %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Day:&nbsp;
+        <% if section.day == nil or section.day == "" %>
+          To be Announced
+        <% else %>
+          <%= section.day %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Time:&nbsp;
+        <% if section.time == nil or section.time == "" %>
+          To be Announced
+        <% else %>
+          <%= section.time %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;Is Require Grader:&nbsp;
+        <% if section.is_require_grader == nil or section.is_require_grader == "" %>
+          To be Decided
+        <% else %>
+          <%= section.is_require_grader %>
+        <% end %>
+      </p>
+      <% if current_user.role == "admin" %>
+        <p>
+          &emsp;&emsp;&emsp;&emsp;
+          <%= link_to "Delete Section", course_section_path(course.id, section.id), data: { turbo_method: :delete } ,class:"links" %>
+          &emsp;
+          <%= link_to "Edit Section", edit_course_section_path(course.id, section.id), class:"links" %>
+        </p>
+      <% end %>
+      <hr/>
+    <% end %>
+    <hr/>
+    <hr/>
+  <% end %>
+
+  <%== pagy_nav(@pagy) %>
+  <br />
+  <br />
+  <br />
+<% end %>

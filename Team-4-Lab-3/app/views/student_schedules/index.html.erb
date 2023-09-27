@@ -1,0 +1,166 @@
+
+<br/>
+<br/>
+<%= link_to "Back to Applications", user_applications_path(current_user.id), class: "btn btn-secondary" %>
+<br/>
+
+<h1>Available Time</h1>
+<p>
+  <% if current_user.role == "student" %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAvailableTimeModal">Add new Availability Time</button>
+  <% end %>
+</p>
+<%= render partial: "student_schedules/new_availableTime", locals: { application_id: @application_id } %>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Availability Day</th>
+    <th scope="col">Availability Time</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @studentSchedules.each do |schedule| %>
+    <% if schedule.schedule_type == "availableTime" %>
+      <tr scope="row">
+        <td style="width: 33%">
+          <%= schedule.availability_day %>
+        </td>
+        <td style="width: 33%">
+          <label class="list-group-item d-flex gap-2">
+            from <%= schedule.start_hour %> to <%= schedule.end_hour %>
+          </label>
+        </td>
+        <td style="width: 33%">
+          <% if current_user.role == "student" %>
+            <label class="list-group-item d-flex gap-2 flex-shrink-0">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAvailableTimeModal<%= schedule.id %>">Delete</button>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editAvailableTimeModal<%= schedule.id %>">Edit</button>
+            </label>
+          <% end %>
+        </td>
+        <%= render partial: "student_schedules/delete_availableTime", locals: { application_id: @application_id, schedule: schedule } %>
+        <%= render partial: "student_schedules/edit_availableTime", locals: { application_id: @application_id, schedule: schedule } %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+
+
+<h1>Enrollment / Courses Taking now</h1>
+<p>
+  <% if current_user.role == "student" %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEnrollmentModal">Add new course</button>
+  <% end %>
+</p>
+<%= render partial: "student_schedules/new_enrollment", locals: { application_id: @application_id } %>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Academic Year / Semester</th>
+    <th scope="col">Course Catalog Number</th>
+    <th scope="col">Grade</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @studentSchedules.each do |schedule| %>
+    <% if schedule.schedule_type == "enrollment" %>
+      <tr scope="row">
+        <td style="width: 25%">
+          <%= schedule.academic_year %> / <%= schedule.semester %>
+        </td>
+        <td style="width: 25%">
+          <label class="list-group-item d-flex gap-2">
+            CSE <%= schedule.course_catalog_number %>
+          </label>
+        </td>
+        <td style="width: 25%">
+          <label class="list-group-item d-flex gap-2">
+            <%#= schedule.grade %>
+            pending
+          </label>
+        </td>
+        <td style="width: 25%">
+          <% if current_user.role == "student" %>
+            <label class="list-group-item d-flex gap-2 flex-shrink-0">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEnrollmentModal<%= schedule.id %>">Delete</button>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editEnrollmentModal<%= schedule.id %>">Edit</button>
+            </label>
+          <% end %>
+        </td>
+        <%= render partial: "student_schedules/delete_enrollment", locals: { application_id: @application_id, schedule: schedule } %>
+        <%= render partial: "student_schedules/edit_enrollment", locals: { application_id: @application_id, schedule: schedule } %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+
+<br>
+<br>
+<br>
+<br>
+
+
+<h1>Transcript / Courses have taken</h1>
+<p>
+  <% if current_user.role == "student" %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTranscriptModal">Add new course</button>
+  <% end %>
+</p>
+<%= render partial: "student_schedules/new_transcript", locals: { application_id: @application_id } %>
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Academic Year / Semester</th>
+    <th scope="col">Course Catalog Number</th>
+    <th scope="col">Grade</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @studentSchedules.each do |schedule| %>
+    <% if schedule.schedule_type == "transcript" %>
+      <tr scope="row">
+        <td style="width: 25%">
+          <%= schedule.academic_year %> / <%= schedule.semester %>
+        </td>
+        <td style="width: 25%">
+          <label class="list-group-item d-flex gap-2">
+            CSE <%= schedule.course_catalog_number %>
+          </label>
+        </td>
+        <td style="width: 25%">
+          <label class="list-group-item d-flex gap-2">
+            <%= schedule.grade %>
+          </label>
+        </td>
+        <td style="width: 25%">
+          <% if current_user.role == "student" %>
+            <label class="list-group-item d-flex gap-2 flex-shrink-0">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTranscriptModal<%= schedule.id %>">Delete</button>
+              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editTranscriptModal<%= schedule.id %>">Edit</button>
+            </label>
+          <% end %>
+        </td>
+        <%= render partial: "student_schedules/delete_transcript", locals: { application_id: @application_id, schedule: schedule } %>
+        <%= render partial: "student_schedules/edit_transcript", locals: { application_id: @application_id, schedule: schedule } %>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>

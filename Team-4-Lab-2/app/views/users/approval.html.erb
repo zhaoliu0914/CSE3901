@@ -1,0 +1,16 @@
+<% @users.each do |user| %>
+  <p>Email: <%= user.email %></p>
+  <p>First Name: <%= user.first_name %></p>
+  <p>Last Name: <%= user.last_name %></p>
+  <p>
+    <%= link_to "Approval", users_approval_update_path(@profile, :id => user.id)  %>
+  </p>
+  <br/>
+  <hr/>
+<% end %>
+
+<%= link_to "Go back", root_path %>
+<br/>
+<br/>
+
+<%== pagy_nav(@pagy) %>

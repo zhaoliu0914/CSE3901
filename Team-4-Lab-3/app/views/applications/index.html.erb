@@ -1,0 +1,66 @@
+<%= javascript_include_tag 'student_application.js' %>
+
+<br/>
+<br/>
+<%= link_to "Main Page", root_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>Applications</h1>
+<p>
+  <% if current_user.role == "student" %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addApplicationModal">Add new Applications
+    </button>
+  <% end %>
+</p>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Academic Year/Semester</th>
+    <th scope="col">Contact Information</th>
+    <th scope="col">Interested Courses to Grade</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @applications.each do |application| %>
+    <tr scope="row">
+      <td style="width: 25%">
+        <%= application.academic_year %> <%= application.semester %>
+      </td>
+      <td style="width: 25%">
+        <label class="list-group-item d-flex gap-2">
+          <%= application.phone %>
+          <br/>
+          <%= application.address %>
+        </label>
+      </td>
+      <td style="width: 25%">
+        <label class="list-group-item d-flex gap-2">
+          <% application.student_interested_courses.each do |course| %>
+            CSE <%= course.course_catalog_number %>
+            <br/>
+          <% end %>
+        </label>
+      </td>
+      <td style="width: 25%">
+        <label class="list-group-item d-flex gap-2 flex-shrink-0">
+          <% if current_user.role == "student" %>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteApplicationModal<%= application.id %>">Delete</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editApplicationModal<%= application.id %>">Edit</button>
+          <% end %>
+          <%= link_to "Manage Course Schedules", user_application_student_schedules_path(current_user.id, application.id), class: "btn btn-primary" %>
+        </label>
+      </td>
+      <%= render partial: "applications/delete", locals: { application: application, pageNumber: @pagy.page } %>
+      <%= render partial: "applications/edit", locals: { application: application, pageNumber: @pagy.page } %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= render partial: "applications/new", locals: { pageNumber: @pagy.page } %>
+
+<br>
+<%== pagy_nav(@pagy) %>
+<br>
+

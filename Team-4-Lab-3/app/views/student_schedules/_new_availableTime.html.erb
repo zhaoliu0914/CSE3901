@@ -1,0 +1,49 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="addAvailableTimeModal">
+  <% @student_schedule = StudentSchedule.new %>
+  <%= form_with model: @student_schedule, local: true, url: user_application_student_schedules_path(current_user.id, application_id), method: :post do |form| %>
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">New Availability Time</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <label for="basic-form-input" class="form-label">Availability Day</label>
+          <%#= form.label :availability_day %>
+          <div class="input-group mb-3">
+            <%#= form.select :availability_day, ["monday", "tuesday", "wednesday", "thursday", "friday", "Saturday", "sunday"], class: "form-select", :required => 'required' %>
+            <select class="form-select" aria-label="Default select example" name="student_schedule[availability_day]" required>
+              <option value="monday">monday</option>
+              <option value="tuesday">tuesday</option>
+              <option value="wednesday">wednesday</option>
+              <option value="thursday">thursday</option>
+              <option value="friday">friday</option>
+              <option value="Saturday">Saturday</option>
+              <option value="sunday">sunday</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :start_hour %>
+            <%= form.text_field :start_hour, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :end_hour %>
+            <%= form.text_field :end_hour, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <%= form.hidden_field :application_id, value: application_id %>
+          <%= form.hidden_field :schedule_type, value: "availableTime" %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Create</button>
+
+          <small class="text-body-secondary">All fields are required to input data.</small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

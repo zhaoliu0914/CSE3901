@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="display.css">
+    <title>Document</title>
+  </head>
+  <body onload="displayDialog()">
+    <div class="img-container">
+      <img src="src/assets/setImage.jpeg" alt="Game of Set image">
+    </div>
+    <div id="mainPageId">
+      <table class="center">
+        <tr>
+          <td><h2>levels of difficulty: </h2></td>
+          <td><h2 id="displayLevelId"></h2></td>
+        </tr>
+      </table>
+      <table class="center">
+        <tr>
+          <td><img id="computerImageId" src="src/assets/arrow.png" height="40" width="40" style="display: none;"></td>
+          <td>Computer Score: </td>
+          <td id="computerScoreId">0</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td>Time: </td>
+          <td id="computerTimeId"></td>
+        </tr>
+        <tr>
+          <td><img id="userImageId" src="src/assets/arrow.png" height="40" width="40" style="display: none;"></td>
+          <td>Player Score:</td>
+          <td id="playerScoreId">0</td>
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          <td>Time: </td>
+          <td id="userTimeId"></td>
+        </tr>
+      </table>
+      <table id="mainTableId" class="center">
+        <tr>
+          <td id="00Id">
+            <!--
+            <input type="checkbox" id="00CheckboxId" name="checkboxCardName" value="00" style="display: none;">
+            <label for="00CheckboxId">
+              <img src="src/assets/card_images/green_oval_dashed_1.PNG">
+            </label>
+            -->
+          </td>
+          <td id="01Id"></td>
+          <td id="02Id"></td>
+          <td id="03Id"></td>
+        </tr>
+        <tr>
+          <td id="10Id"></td>
+          <td id="11Id"></td>
+          <td id="12Id"></td>
+          <td id="13Id"></td>
+        </tr>
+        <tr >
+          <td id="20Id"></td>
+          <td id="21Id"></td>
+          <td id="22Id"></td>
+          <td id="23Id"></td>
+        </tr>
+      </table>
+      <table class="center">
+        <tr>
+          <!--<td><button onclick="resetTable()">Reset Table</button></td>-->
+          <td><button onclick="generateHint(true)">Hint</button></td>
+          <td><button onclick="addCardsOrDecideWinner()">There is not set on the table</button></td>
+          <td><button onclick="displayDialog()">Restart Game</button></td>
+        </tr>
+      </table>
+    </div>
+    
+    <dialog id="dialogId">
+      <table>
+        <tr>
+          <td>levels of difficulty:</td>
+        </tr>
+        <tr>
+          <td>
+            <input type="radio" id="easyId" name="difficultyName" value="easy">
+            <label for="easyId">Easy</label>
+            
+            <input type="radio" id="hardId" name="difficultyName" value="hard">
+            <label for="hardId">Hard</label>
+            <br>
+            <br>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button onclick="initDeck()">Start</button>
+          </td>
+        </tr>
+      </table>
+    </dialog>
+  </body>
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script -->
+  <!-- Defer loads the script in parallel with the page and executes it after the page has been parsed. -->
+  <!-- Async loads the script in parallel with the page and executes it as soon as it is available. -->
+  <script src="./src/index.js" defer></script>
+</html>

@@ -1,0 +1,64 @@
+<br/>
+<br/>
+<%= link_to "Main Page", root_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>Recommendations</h1>
+<p>
+  <% if current_user.role == "instructor" %>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRecommendationModal">Add new Recommendation</button>
+  <% end %>
+</p>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Course/Section</th>
+    <th scope="col">Student Name</th>
+    <th scope="col">Student Email</th>
+    <th scope="col">Description</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @recommendation.each do |recommendation| %>
+    <tr scope="row">
+      <td style="width: 20%">
+        CSE <%= recommendation.course_catalog_number %> / section: <%= recommendation.section_class_number %>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= recommendation.student_first_name %> <%= recommendation.student_last_name %>
+        </label>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= recommendation.student_email %>
+        </label>
+      </td>
+      <td style="width: 25%">
+        <label class="list-group-item d-flex gap-2">
+          <%= recommendation.desc %>
+        </label>
+      </td>
+      <td style="width: 15%">
+        <% if current_user.role == "instructor" %>
+          <label class="list-group-item d-flex gap-2 flex-shrink-0">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRecommendationModal<%= recommendation.id %>">Delete</button>
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editRecommendationModal<%= recommendation.id %>">Edit</button>
+          </label>
+        <% end %>
+      </td>
+    </tr>
+
+    <%= render partial: "recommendations/delete", locals: { recommendation: recommendation, pageNumber: @pagy.page } %>
+    <%= render partial: "recommendations/edit", locals: { recommendation: recommendation, pageNumber: @pagy.page } %>
+  <% end %>
+  </tbody>
+</table>
+<%= render partial: "recommendations/new", locals: { pageNumber: @pagy.page } %>
+
+<br>
+<%== pagy_nav(@pagy) %>
+<br>
+

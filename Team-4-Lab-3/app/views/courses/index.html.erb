@@ -1,0 +1,158 @@
+<!--set up the main index when the course list is empty. Provide a link to the main page, and, if admin user, to reload the database-->
+<%= javascript_include_tag 'section_edit.js' %>
+
+<% if @course.empty? %>
+  <p>There are no courses</p>
+  <%= link_to "Main Page", root_path, class: "btn btn-secondary" %>
+  <% if current_user.role == "admin" %>
+    <p><%= button_to "Reload Database", courses_reload_new_path, method: :get , class: "btn btn-success" %></p>
+  <% end %>
+<% else %>
+
+<!--set up the main index when the course list is not empty. Provide a link to the main page, and if admin user, to add course, reload database, and sort-->
+  <%== pagy_nav(@pagy) %>
+  <br/>
+  <p>
+    <%= link_to "Main Page", root_path , class: "btn btn-secondary" %>
+    <% if current_user.role == "admin" %>
+      &emsp;
+      <%= link_to "Reload Database", courses_reload_new_path , class: "btn btn-success" %>
+      &emsp;
+      <%= link_to "Add Course", new_course_path, class: "btn btn-primary" %>
+
+    <% end %>
+    &emsp;
+    <% if @order == "asc" %>
+      <%= link_to "Sort Catalog Number in Descending  order", courses_path(order: "desc") %>
+    <% else %>
+      <%= link_to "Sort Catalog Number in Ascending order", courses_path(order: "asc") %>
+    <% end %>
+    &emsp;
+
+  </p>
+  <!--
+  For each course display the fields: 
+  - Title & Description
+  - Campus, Term, & Units
+  
+  For admins, provide links to edit and delete the course, and to add a section
+  -->
+  <% @course.each do |course| %>
+    <h1>Course: CSE <%= course.catalog_number %></h1>
+    <p><b>Catalog Number: CSE <%= course.catalog_number %></b></p>
+    <p><b>Title:</b> <%= course.title %></p>
+    <p><b>Short Description:</b> <%= course.short_description %></p>
+    <p><b>Description:</b> <%= course.description %></p>
+    <p><b>Campus:</b> <%= course.campus %></p>
+    <p><b>Term:</b> <%= course.term %></p>
+    <p><b>Units:</b> <%= course.units %></p>
+    <% if current_user.role == "admin" %>
+      <p>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCourseModal">Delete Course</button>
+        &emsp;
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editCourseModal">Edit Course</button>
+        &emsp;&emsp;
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSectionModal">Add Section</button>
+      </p>
+      <%= render partial: "courses/delete_course_dialog", locals: { courseId: course.id, catalogNumber: course.catalog_number } %>
+      <%= render partial: "courses/edit", locals: { course: course, pageNumber: @pagy.page } %>
+      <%= render partial: "sections/new", locals: { course: course, pageNumber: @pagy.page } %>
+    <% end %>
+
+    <h1>&emsp;Sections</h1>
+    <!--
+    For each course section display the fields:
+    - Class number & Section number
+    - Instructor(s) & Instruction mode
+    - Start date & End date
+    - Location, Room, Day, Time
+    - If the section requires a grader
+
+    For admins, provide links to edit or delete the section
+    -->
+    <hr/>
+    <% course.sections.each do |section| %>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Class Number:</b>&nbsp;
+        <b><%= section.class_number %></b>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Section Number:</b>&nbsp;
+        <%= section.section_number %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Instructor Name:</b>&nbsp;
+        <% if section.instructor_name == nil or section.instructor_name == "" %>
+          To be Announced
+        <% else %>
+          <%= section.instructor_name %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Instructor Email:</b>&nbsp;
+        <% if section.instructor_email == nil or section.instructor_email == "" %>
+          To be Announced
+        <% else %>
+          <%= section.instructor_email %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Instruction Mode:</b>&nbsp;
+        <%= section.instruction_mode %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Start Date:</b>&nbsp;
+        <%= section.start_date %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>End Date:</b>&nbsp;
+        <%= section.end_date %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Location:</b>&nbsp;
+        <% if section.location == nil or section.location == "" %>
+          To be Announced
+        <% else %>
+            <%= section.location %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Room:</b>&nbsp;
+        <% if section.room == nil or section.room == "" %>
+          To be Announced
+        <% else %>
+          <%= section.room %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Day:</b>&nbsp;
+        <% if section.day == nil or section.day == "" %>
+          To be Announced
+        <% else %>
+          <%= section.day %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Time:</b>&nbsp;
+        <% if section.time == nil or section.time == "" %>
+          To be Announced
+        <% else %>
+          <%= section.time %>
+        <% end %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Grader Needed:</b>&nbsp;
+        <%= section.is_require_grader %>
+      </p>
+      <p>&emsp;&emsp;&emsp;&emsp;<b>Number Grader Needed:</b>&nbsp;
+        <%= section.num_graders_required %>
+      </p>
+      <% if current_user.role == "admin" %>
+        <p>
+          &emsp;&emsp;&emsp;&emsp;
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteSectionModal<%= section.id %>">Delete Section</button>
+          &emsp;
+          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editSectionModal<%= section.id %>">Edit Section</button>
+        </p>
+        <%= render partial: "courses/delete_section_dialog", locals: { courseId: course.id, sectionId: section.id, sectionNumber: section.section_number, pageNumber: @pagy.page } %>
+        <%= render partial: "sections/edit", locals: { course: course, section: section, pageNumber: @pagy.page } %>
+      <% end %>
+      <hr/>
+    <% end %>
+    <hr/>
+    <hr/>
+  <% end %>
+
+  <%== pagy_nav(@pagy) %>
+  <br />
+  <br />
+  <br />
+<% end %>

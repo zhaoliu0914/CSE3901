@@ -1,0 +1,87 @@
+<%= link_to "Go back", root_path %>
+<table class = "table table-hover">
+    <thead>
+        <tr>
+            <th>User Index</th>
+            <th>Sections
+            <%== pagy_nav(@pagy)%>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr scope="row">
+            <td style = "width: 50%">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email&nbsp</th>
+                            <th>Role&nbsp</th>
+                            <th>First Name&nbsp</th>
+                            <th>Last Name&nbsp</th>
+                            <th>Functions&nbsp</th>
+                        </tr>
+                    </thead>
+                    # table to display all of the user/students displayed on the left while sections
+                    # are displayed on the right
+                    <tbody>
+                        <% @users.each do |user| %>
+                            <tr>
+                                <td><%= user.email %></td>
+                                <td><%= user.role %></td>
+                                <td><%= user.first_name %></td>
+                                <td><%= user.last_name %></td>
+                                # displays possible functions or tasks the administrator can do for each user
+                                <td>
+                                    <%# if user.applications.empty? == false %>
+                                        <%# user.applications.each do |application|%>
+                                            <%#= link_to "Application", user_application_path(:user_id => user.id, :id => application.id) %>
+                                        <%# end %>
+                                    <%# end %>
+                                    <% if user.role == "admin_waiting" || user.role == "instructor_waiting" %>
+                                        <%= link_to "Approve", users_approval_update_path(:id => user.id) %>
+                                    <% end %>
+
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </td>
+            <td style = "width: 50%">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Section Number&nbsp</th>
+                            <th>Corresponding Course&nbsp</th>
+                            <th>Section Time&nbsp</th>
+                            <th>Grader Required&nbsp</th>
+                            <th>Number of Graders Required&nbsp</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    # section belongs to a course so we fin sections by course id
+                    # displays info about the sections so the instructor can see what student 
+                    # is a good fit to grade a section
+                    <tbody>
+                        <% @sections.each do |section| %>
+                        <% @course = Course.find(section.course_id)%>
+                            <tr>
+                                <td><%= section.section_number %></td>
+                                <td><%= @course.catalog_number %></td>
+                                <td><%= section.time %> <%= section.day %> </td>
+                                <td><%= section.is_require_grader %></td>
+                                <td><%= section.num_graders_required %></td>
+                                <td>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editSectionModal<%= section.id %>">Edit Section</button>
+                                <%= render partial: "sections/edit", locals: { course: @course, section: section, pageNumber: @pagy.page } %>
+                                </td>
+                            </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>
+&emsp;
+<%= link_to 'Back', :back, class: "links" %>

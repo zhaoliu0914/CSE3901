@@ -1,0 +1,58 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="addTranscriptModal">
+  <% @student_schedule = StudentSchedule.new %>
+  <%= form_with model: @student_schedule, local: true, url: user_application_student_schedules_path(current_user.id, application_id), method: :post do |form| %>
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Add taken Course</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <label for="basic-form-input" class="form-label">Academic Year</label>
+          <%#= form.label :availability_day %>
+          <div class="input-group mb-3">
+            <%#= form.select :availability_day, ["monday", "tuesday", "wednesday", "thursday", "friday", "Saturday", "sunday"], class: "form-select", :required => 'required' %>
+            <select class="form-select" aria-label="Default select example" name="student_schedule[academic_year]" required>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+              <option value="2025">2025</option>
+            </select>
+          </div>
+
+          <label for="basic-form-input" class="form-label">Semester</label>
+          <div class="input-group mb-3">
+            <%#= form.select :availability_day, ["monday", "tuesday", "wednesday", "thursday", "friday", "Saturday", "sunday"], class: "form-select", :required => 'required' %>
+            <select class="form-select" aria-label="Default select example" name="student_schedule[semester]" required>
+              <option value="spring">spring</option>
+              <option value="summer">summer</option>
+              <option value="autumn">autumn</option>
+            </select>
+          </div>
+
+          <label for="basic-form-input" class="form-label">Course catalog number:</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">CSE </span>
+            <input type="text" id="basic-form-input" class="form-control" aria-describedby="basic-addon3" name="student_schedule[course_catalog_number]" required>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :grade %>
+            <%= form.text_field :grade, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <%= form.hidden_field :application_id, value: application_id %>
+          <%= form.hidden_field :schedule_type, value: "transcript" %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Create</button>
+
+          <small class="text-body-secondary">All fields are required to input data.</small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

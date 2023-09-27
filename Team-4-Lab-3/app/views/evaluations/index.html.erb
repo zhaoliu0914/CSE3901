@@ -1,0 +1,69 @@
+<br/>
+<br/>
+<%= link_to "Main Page", root_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>Evaluations</h1>
+<p>
+</p>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Course/Section</th>
+    <th scope="col">Academic Year / Semester</th>
+    <th scope="col">Instructor Name</th>
+    <th scope="col">Student Name</th>
+    <th scope="col">Rate</th>
+    <th scope="col">Comment</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sectionGraders.each do |sectionGrader| %>
+    <tr scope="row">
+      <td style="width: 20%">
+        CSE <%= sectionGrader.course_catalog_number %> / Section <%= sectionGrader.section_class_number %>
+      </td>
+      <td style="width: 15%">
+        <label class="list-group-item d-flex gap-2">
+          <%= sectionGrader.academic_year %> <%= sectionGrader.semester %>
+        </label>
+      </td>
+      <td style="width: 15%">
+        <label class="list-group-item d-flex gap-2">
+          <%= sectionGrader.instructor_name %>
+        </label>
+      </td>
+      <td style="width: 15%">
+        <label class="list-group-item d-flex gap-2">
+          <%= sectionGrader.student_name %>
+        </label>
+      </td>
+      <td style="width: 10%">
+        <label class="list-group-item d-flex gap-2">
+          <%= sectionGrader.rate %>
+        </label>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= sectionGrader.comment %>
+        </label>
+      </td>
+      <td style="width: 10%">
+        <% if current_user.role == "instructor" %>
+          <label class="list-group-item d-flex gap-2 flex-shrink-0">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editEvaluationModal<%= sectionGrader.id %>">Edit</button>
+          </label>
+        <% end %>
+      </td>
+      <%= render partial: "evaluations/edit", locals: { sectionGrader: sectionGrader } %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<%== pagy_nav(@pagy) %>
+<br>
+

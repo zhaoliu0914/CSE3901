@@ -1,0 +1,63 @@
+<h1>Edit Course</h1>
+<hr>
+
+<%= form_with model: @course, local: true, url: course_path(@course), method: :patch do |form| %>
+
+  <div class="field">
+    <%= form.label :catalog_number %>:
+    <%= form.text_field :catalog_number, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>:
+    <%= form.text_field :title, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :short_description %>:
+    <%= form.text_field :short_description, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>:
+    <%= form.text_field :description, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :campus %>:
+    <%= form.text_field :campus, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :term %>:
+    <%= form.text_field :term, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :units %>:
+    <%= form.text_field :units, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <%= form.submit %>
+  &emsp;&emsp;
+  <%= link_to "Go back", courses_path %>
+<% end %>
+
+<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,48 @@
+
+<br/>
+<br/>
+<%= link_to "Go back", assignments_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>Edit Assignment</h1>
+
+<%= form_with model: @sectionGrader, local: true, url: assignment_path(@sectionGrader.id), method: :patch do |form| %>
+  <%= form.hidden_field :old_section_id, value: @sectionGrader.section_id %>
+  <p>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </p>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Courses / Sections</th>
+      <th scope="col">Students</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr scope="row">
+      <td style="width: 50%">
+        <div class="input-group mb-3">
+          <select class="form-select" size="15" aria-label="Default select example" name="section_grader[section_id]" required>
+            <% @sections.each do |section| %>
+              <option value="<%= section.id %>" <% if section.id == @sectionGrader.section_id %>selected<% end %>>CSE <%= section.courseCatalogNumber %> / Section <%= section.class_number %></option>
+            <% end %>
+          </select>
+        </div>
+      </td>
+      <td style="width: 50%">
+        <div class="input-group mb-3">
+          <select class="form-select" size="15" aria-label="Default select example" name="section_grader[student_id]" required>
+            <% @users.each do |user| %>
+              <option value="<%= user.id %>" <% if user.id == @sectionGrader.student_id %>selected<% end %>><%= user.first_name %> <%= user.last_name %></option>
+            <% end %>
+          </select>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>
+<br>
+<br>
+

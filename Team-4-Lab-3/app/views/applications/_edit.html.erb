@@ -1,0 +1,61 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="editApplicationModal<%= application.id %>">
+  <%= form_with model: application, local: true, url: user_application_path(current_user.id, application.id), method: :PATCH do |form| %>
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Edit Application</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <label for="basic-form-input" class="form-label">Academic Year</label>
+          <%#= form.label :academic_year %>
+          <div class="input-group mb-3">
+            <%#= form.select :academic_year, ["2023", "2024", "2025"], class: "form-select", :required => 'required' %>
+            <select class="form-select" aria-label="Default select example" name="application[academic_year]" required>
+              <option value="2023" <% if application.academic_year == "2023" %>selected<% end %>>2023</option>
+              <option value="2024" <% if application.academic_year == "2024" %>selected<% end %>>2024</option>
+              <option value="2025" <% if application.academic_year == "2025" %>selected<% end %>>2025</option>
+            </select>
+          </div>
+
+          <label for="basic-form-input" class="form-label">Semester</label>
+          <%#= form.label :semester %>
+          <div class="mb-3">
+            <%#= form.select :semester, ["spring", "summer", "autumn"], class: "form-select", :required => 'required' %>
+            <select class="form-select" aria-label="Default select example" name="application[semester]" required>
+              <option value="spring" <% if application.semester == "spring" %>selected<% end %>>Spring</option>
+              <option value="summer" <% if application.semester == "summer" %>selected<% end %>>Summer</option>
+              <option value="autumn" <% if application.semester == "autumn" %>selected<% end %>>Autumn</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <%= form.label :phone %>:
+            <%= form.text_field :phone, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <div class="mb-3">
+            <%= form.label :address %>:
+            <%= form.text_field :address, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <div id="interestedCoursesEditId" class="mb-3">
+            <label for="basic-form-input" class="form-label">Interested Courses</label><!-- <button type="button" class="btn btn-outline-primary" onclick="addCourse('Edit')">add course</button>-->
+            <% application.student_interested_courses.each do |course| %>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon3">CSE </span>
+                <input type="text" id="basic-form-input" class="form-control" aria-describedby="basic-addon3" name="application[interestedCourses][]" value="<%= course.course_catalog_number %>">
+              </div>
+            <% end %>
+          </div>
+
+          <%= form.hidden_field :currentPageNumber, value: pageNumber %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Update</button>
+
+          <small class="text-body-secondary">All fields are required to input data excepted for Interested Courses.</small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,64 @@
+
+<br/>
+<br/>
+<%= link_to "Go back", assignments_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>New Assignment</h1>
+
+<%= form_with model: @sectionGrader, local: true, url: assignments_path(current_user.id), method: :post do |form| %>
+  <p>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </p>
+
+  <label for="basic-form-input" class="form-label">Academic Year</label>
+  <div class="input-group mb-3">
+    <select class="form-select" aria-label="Default select example" name="section_grader[academic_year]" required>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+      <option value="2023">2023</option>
+    </select>
+  </div>
+  <label for="basic-form-input" class="form-label">Semester</label>
+  <div class="mb-3">
+    <select class="form-select" aria-label="Default select example" name="section_grader[semester]" required>
+      <option value="spring">Spring</option>
+      <option value="summer">Summer</option>
+      <option value="autumn">Autumn</option>
+    </select>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Courses / Sections</th>
+      <th scope="col">Students</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr scope="row">
+      <td style="width: 50%">
+        <div class="input-group mb-3">
+          <select class="form-select" size="15" aria-label="Default select example" name="section_grader[section_id]" required>
+            <% @sections.each do |section| %>
+              <option value="<%= section.id %>">CSE <%= section.courseCatalogNumber %> / Section <%= section.class_number %></option>
+            <% end %>
+          </select>
+        </div>
+      </td>
+      <td style="width: 50%">
+        <div class="input-group mb-3">
+          <select class="form-select" size="15" aria-label="Default select example" name="section_grader[student_id]" required>
+            <% @users.each do |user| %>
+              <option value="<%= user.id %>"><%= user.first_name %> <%= user.last_name %></option>
+            <% end %>
+          </select>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+<% end %>
+<br>
+<br>
+

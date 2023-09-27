@@ -1,0 +1,45 @@
+<!-- provide a welcome screen based on current user:
+- If current user is logged in, provide a reset password link, a link to the course list, and a sign out link
+- If current user is an admin, provide an Approvals Admin Account link
+- If current user is not signed in, provide login and sign up links
+//-->
+<% if current_user %>
+  <div class="placeMid">
+    <div class="welcome">Account: <%= current_user.email %></div>
+    
+    <%= link_to "Reset Password", edit_user_password_url(reset_password_token: current_user.email), class:"links" %>
+    &emsp;
+    <%= link_to "Courses", courses_path, class:"links"%>
+    <% if current_user.role == "student" || current_user.role == "admin" %>
+      &emsp;
+      <%= link_to "Applications", user_applications_path(current_user.id), class: "links" %>
+    <% end %>
+    
+    <% if current_user.role == "admin" %>
+      &emsp;
+      <%= link_to "User Index", users_path, class:"links"%>
+      &emsp;
+      <%= link_to "Assign Graders", assignments_path, class:"links"%>
+    <% end %>
+
+    &emsp;
+    <% if current_user.role == "admin" or current_user.role == "instructor" %>
+    <%= link_to "Recommendations", user_recommendations_path(current_user.id), class:"links"%>
+    <% end %>
+    &emsp;
+    <%= link_to "Evaluations", user_evaluations_path(current_user.id), class:"links"%>
+    &emsp;
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "buttons" %>
+  </div>
+<% else %>
+  <div class= "placeMid">
+    <div class="welcome">Team 4 Project 3</div>
+    <div class="signUp">
+    <%= link_to "Login", new_user_session_path , class:"links"%>
+    </div>
+    &emsp;
+    <div class="signUp">
+      <%= link_to "Sign up", new_user_registration_path , class:"links"%>
+    </div>
+  </div>
+<% end %>

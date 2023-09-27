@@ -1,0 +1,107 @@
+<% @section = Section.new %>
+<%= form_with model: @section, local: true, url: course_sections_path(:course_id => course.id), method: :post do |form| %>
+  <!-- Code to create a new form with the following fields:
+  - Class number
+  - Section number
+  - Instructor name
+  - Instructor email
+  - Instruction mode
+  - Start date
+  - End date
+  - Room
+  - Day
+  - Time
+  - Requires grader (Y/N)
+  Default value set to "(Needs Filled In)"
+  //-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="addSectionModal">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Add a new Section for CSE <%= course.catalog_number %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <div class="mb-3">
+            <%= form.label :class_number %>
+            <%= form.text_field :class_number, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :section_number %>
+            <%= form.text_field :section_number, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+
+          <div class="mb-3">
+            <%= form.label :instructor_email %>
+            <%= form.text_field :instructor_email, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :instruction_mode %>
+            <%= form.text_field :instruction_mode, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :start_date %>
+            <%= form.date_field :start_date, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :end_date %>
+            <%= form.date_field :end_date, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :location %>
+            <%= form.text_field :location, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :room %>
+            <%= form.text_field :room, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :day %>
+            <%= form.text_field :day, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :time %>
+            <%= form.text_field :time, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :is_a_grader_required? %>
+
+            <%= form.radio_button :is_require_grader,  "yes" %>
+            <%= form.label :is_require_grader, "Yes", value: "Yes" %>
+
+            <%= form.radio_button :is_require_grader, "no" %>
+            <%= form.label :is_require_grader, "No", value: "No" %>
+
+          </div>
+
+          <div class="mb-3">
+            <%= form.label :num_graders_required %>
+            <%= form.number_field :num_graders_required, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <%= form.hidden_field :currentPageNumber, value: pageNumber %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Add</button>
+
+          <small class="text-body-secondary">
+            All fields are required to input data. If there is no values for some fields, please input "To be announced"
+          </small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+

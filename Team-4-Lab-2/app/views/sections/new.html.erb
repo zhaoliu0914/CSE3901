@@ -1,0 +1,103 @@
+<h1>Add a new Section</h1>
+<hr>
+
+<%= form_with model: @section, local: true, url: course_sections_path do |form| %>
+  
+  <div class="field">
+    <%= form.label :class_number %>
+    <%= form.text_field :class_number, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :section_number %>
+    <%= form.text_field :section_number, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :instructor_name %>
+    <%= form.text_field :instructor_name, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :instructor_email %>
+    <%= form.text_field :instructor_email, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :instruction_mode %>
+    <%= form.text_field :instruction_mode, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :end_date %>
+    <%= form.date_field :end_date, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :room %>
+    <%= form.text_field :room, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :day %>
+    <%= form.text_field :day, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :time %>
+    <%= form.text_field :time, :required => 'required' %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :is_a_grader_required? %>
+    <%= form.radio_button :is_require_grader, "yes" %>
+    <%= form.label :is_require_grader, "Yes", value: "Yes" %>
+
+    <%= form.radio_button :is_require_grader, "no" %>
+    <%= form.label :is_require_grader, "No", value: "No" %>
+
+    <br />
+    <br />
+  </div>
+  <%= form.submit %>
+  &emsp;&emsp;
+  <%= link_to "Go back", courses_path , class:"links"%>
+
+<% end %>
+<br />
+<br />
+<br />
+<br />
+

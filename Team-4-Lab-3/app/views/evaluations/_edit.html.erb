@@ -1,0 +1,57 @@
+<div class="modal fade" tabindex="-1" role="dialog" id="editEvaluationModal<%= sectionGrader.id %>">
+  <%= form_with model: sectionGrader, local: true, url: user_evaluation_path(current_user.id, sectionGrader.id), method: :PATCH do |form| %>
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Edit Application</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <label for="basic-form-input" class="form-label">Course</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon3">CSE </span>
+            <input type="text" id="basic-form-input" class="form-control" aria-describedby="basic-addon3" value="<%= sectionGrader.course_catalog_number %>" disabled>
+          </div>
+          <label for="basic-form-input" class="form-label">Section</label>
+          <div class="mb-3">
+            <input type="text" class="form-control rounded-3" value="<%= sectionGrader.section_class_number %>" disabled>
+          </div>
+          <label for="basic-form-input" class="form-label">Academic Year / Semester</label>
+          <div class="mb-3">
+            <input type="text" class="form-control rounded-3" value="<%= sectionGrader.academic_year %> <%= sectionGrader.semester %>" disabled>
+          </div>
+          <label for="basic-form-input" class="form-label">Student Name</label>
+          <div class="mb-3">
+            <input type="text" class="form-control rounded-3" value="<%= sectionGrader.student_name %>" disabled>
+          </div>
+
+          <label for="basic-form-input" class="form-label">Interested Courses</label>
+          <div id="interestedCoursesEditId" class="mb-3">
+            <select class="form-select" aria-label="Default select example" name="section_grader[rate]" required>
+              <option value="Excellent" <% if sectionGrader.rate == "Excellent" %>selected<% end %>>Excellent</option>
+              <option value="Great" <% if sectionGrader.rate == "Great" %>selected<% end %>>Great</option>
+              <option value="Good" <% if sectionGrader.rate == "Good" %>selected<% end %>>Good</option>
+              <option value="Acceptable" <% if sectionGrader.rate == "Acceptable" %>selected<% end %>>Acceptable</option>
+              <option value="Poor" <% if sectionGrader.rate == "Poor" %>selected<% end %>>Poor</option>
+              <option value="Unreliable" <% if sectionGrader.rate == "Unreliable" %>selected<% end %>>Unreliable</option>
+            </select>
+          </div>
+
+          <label for="basic-form-input" class="form-label">Comment</label>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control rounded-3" name="section_grader[comment]" value="<%= sectionGrader.comment %>">
+          </div>
+
+          <%#= form.hidden_field :currentPageNumber, value: pageNumber %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Update</button>
+
+          <small class="text-body-secondary">All fields are required to input data excepted for Interested Courses.</small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

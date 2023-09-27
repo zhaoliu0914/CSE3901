@@ -1,0 +1,55 @@
+<br/>
+<br/>
+<%= link_to "Go back", assignments_path, class: "btn btn-secondary" %>
+<br/>
+
+<h1>Unassigned Courses/Sections</h1>
+<p>
+
+</p>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th scope="col">Course/Section</th>
+    <th scope="col">Instructor Name</th>
+    <th scope="col">Instructor Email</th>
+    <th scope="col">Number of Required Graders</th>
+    <th scope="col">Number of Assigned Graders</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @sections.each do |section| %>
+    <tr scope="row">
+      <td style="width: 20%">
+        CSE <%= section.courseCatalogNumber %> / Section <%= section.class_number %>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= section.instructor_name %>
+        </label>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= section.instructor_email %>
+        </label>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= section.num_graders_required %>
+        </label>
+      </td>
+      <td style="width: 20%">
+        <label class="list-group-item d-flex gap-2">
+          <%= section.number_graders_assigned %>
+        </label>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+<%#== pagy_nav(@pagy) %>
+<br>
+

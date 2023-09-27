@@ -1,0 +1,61 @@
+<%= form_with model: course, local: true, url: course_path(course), method: :patch do |form| %>
+
+  <!--This file sets up the necessary fields for a search-->
+  <div class="modal fade" tabindex="-1" role="dialog" id="editCourseModal">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header p-5 pb-4 border-bottom-0">
+          <h1 class="fw-bold mb-0 fs-2">Edit Course: CSE <%= course.catalog_number %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body p-5 pt-0">
+          <!--field for the catalog number. Should be a four-digit number in the format (1-8)(0-9)(0-9)(0-9)-->
+          <div class="mb-3">
+            <%= form.label :catalog_number %>:
+            <%= form.text_field :catalog_number, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the course title. Usually a few words, but could be longer-->
+          <div class="mb-3">
+            <%= form.label :title %>:
+            <%= form.text_field :title, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the course short description-->
+          <div class="mb-3">
+            <%= form.label :short_description %>:
+            <%= form.text_field :short_description, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the full course description-->
+          <div class="mb-3">
+            <%= form.label :description %>:
+            <%= form.text_field :description, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the course campus. For purposes of this program, should always be "col" for Columbus campus-->
+          <div class="mb-3">
+            <%= form.label :campus %>:
+            <%= form.text_field :campus, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the course term. Should be a four-digit number-->
+          <div class="mb-3">
+            <%= form.label :term %>:
+            <%= form.text_field :term, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+          <!--field for the course units. Should be a single digit number-->
+          <div class="mb-3">
+            <%= form.label :units %>:
+            <%= form.text_field :units, class: "form-control rounded-3", :required => 'required' %>
+          </div>
+
+          <%= form.hidden_field :currentPageNumber, value: pageNumber %>
+
+          <button class="w-100 mb-2 btn btn-lg rounded-3 btn-primary" type="submit">Update</button>
+
+          <small class="text-body-secondary">All fields are required to input data. If there is no values for some
+            fields, please input "To be announced"</small>
+          <hr class="my-4">
+
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,28 @@
+<% if current_user %>
+  <div class="placeMid">
+    <div class="welcome">Account: <%= current_user.email %></div>
+    
+    <%= link_to "Reset Password", edit_user_password_url(reset_password_token: current_user.email), class:"links" %>
+    &emsp;
+    <%= link_to "Courses", courses_path, class:"links"%>
+
+    <% if current_user.role == "admin" %>
+      &emsp;
+      <%= link_to "Approvals Admin Account", users_approval_path , class:"links"%>
+    <% end %>
+    
+    &emsp;
+      <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "buttons" %>
+  </div>
+<% else %>
+  <div class= "placeMid">
+    <div class="welcome">Team 4 Project 2</div>
+    <div class="signUp">
+    <%= link_to "Login", new_user_session_path , class:"links"%>
+    </div>
+    &emsp;
+    <div class="signUp">
+      <%= link_to "Sign up", new_user_registration_path , class:"links"%>
+    </div>
+  </div>
+<% end %>

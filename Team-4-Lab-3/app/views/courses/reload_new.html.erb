@@ -1,0 +1,20 @@
+<%= form_with local: true, url: courses_reload_path do |form| %>
+
+  <div class="field">
+    <%= form.label :campus %> (col for Columbus):
+    <%= form.text_field :campus %>
+    <br />
+    <br />
+  </div>
+
+  <div class="field">
+    <%= form.label :semester %> (1222 for Spring 2022)(1234 for Autumn 2023):
+    <%= form.text_field :semester %>
+    <br />
+    <br />
+  </div>
+
+  <%= form.submit "Reload to database" , class:"buttons"%>
+  &emsp;&emsp;
+  <%= link_to 'Back', :back, class: "links" %>
+<% end %>

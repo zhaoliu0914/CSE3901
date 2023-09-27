@@ -1,0 +1,18 @@
+<div id="deleteApplicationModal<%= application.id %>" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Application!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Delete the application for <%= application.academic_year %> <%= application.semester %>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        <%= link_to "Delete", user_application_path(current_user.id, application.id, :page=>pageNumber), data: { turbo_method: :delete }, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+</div>
